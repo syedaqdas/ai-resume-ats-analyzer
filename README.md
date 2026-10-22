@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.png" alt="AI Resume ATS Analyzer Logo" width="380"/>
+
 # 🎯 AI Resume ATS Analyzer
 ### Intelligent Resume Screening, Skill Gap Analysis & ATS Optimization Platform
 
@@ -8,6 +10,7 @@
 [![spaCy](https://img.shields.io/badge/spaCy-3.8%2B-09A3D5.svg?logo=spacy&logoColor=white)](https://spacy.io/)
 [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.6%2B-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Tests](https://img.shields.io/badge/Tests-21%20Passed%20(100%25)-success.svg)](https://pytest.org/)
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF.svg?logo=githubactions&logoColor=white)](.github/workflows/python-tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 *An end-to-end, open-source AI platform that empowers job seekers to optimize their resumes against job descriptions using Natural Language Processing, TF-IDF semantic keyword analysis, and automated bullet point rewrites.*
@@ -88,14 +91,17 @@ $$\text{ATS Score} = (0.40 \times \text{Skills}) + (0.25 \times \text{Keywords})
 
 <div align="center">
 
-### ATS Score Dashboard & Executive Analytics
-![Dashboard Overview](assets/screenshots/dashboard_overview.png)
+### 1. ATS Score Dashboard & Executive Analytics
+![Dashboard Overview](assets/screenshots/dashboard.png)
 
-### Skill Gap & Domain Coverage Analysis
-![Skill Gap Analysis](assets/screenshots/skill_gap_analysis.png)
+### 2. Weighted Score Breakdown (40/25/20/15 Tiers)
+![ATS Score Deep Dive](assets/screenshots/ats_score.png)
 
-### AI Resume Improvement Suggestions
-![Bullet Optimizer](assets/screenshots/bullet_optimizer.png)
+### 3. Skill Gap & Domain Coverage Analysis
+![Skill Gap Analysis](assets/screenshots/skill_gap.png)
+
+### 4. AI Resume Improvement Suggestions & Dynamic Rewrites
+![Bullet Optimizer](assets/screenshots/suggestions.png)
 
 </div>
 
@@ -239,6 +245,32 @@ python -m spacy download en_core_web_sm
 streamlit run app.py
 ```
 *The application will automatically launch in your default browser at `http://localhost:8501`.*
+
+---
+
+## 📖 Step-by-Step Usage Guide
+
+### Method A: Quick 1-Click Demonstration (Presets)
+1. Launch the application with `streamlit run app.py`.
+2. Look at the left sidebar under **📌 Quick Presets**.
+3. Select **"AI / ML Engineer"** or **"Full-Stack Python Developer"**.
+4. Both the resume and job description fields will automatically populate with realistic portfolio data.
+5. Click **"🚀 Run Complete ATS Compatibility Analysis"**.
+6. Instantly view the ATS score gauge, skill gap badges, domain radar, and dynamic bullet rewrites!
+
+### Method B: Evaluating Your Own Resume
+1. **Upload Resume:**
+   - Under **📄 1. Candidate Resume**, select the **"Upload PDF"** tab and drag & drop your resume PDF (or paste raw text in the **"Paste Plain Text"** tab).
+2. **Provide Job Description:**
+   - Under **💼 2. Job Description**, paste the job requirements from LinkedIn, Indeed, or the employer career portal.
+3. **Run Audit:**
+   - Click the primary blue button **"🚀 Run Complete ATS Compatibility Analysis"**.
+4. **Review Actionable Tabs:**
+   - **📈 Executive Visuals & Score:** Examine your overall score (0-100), grade tier, strengths, and Plotly visualizations.
+   - **🎯 Skill Gap Analysis:** Inspect which skills matched (`✓`) and which critical technologies you are missing (`✗`).
+   - **💡 Bullet Optimizer:** Review dynamic Before/After bullet rewrites to eliminate weak verbs and add quantifiable metrics.
+   - **📋 Profile & Structure Audit:** Check for missing sections (e.g. LinkedIn link, summary, degrees).
+   - **📄 Export Report:** Click **"📥 Download Full ATS Report"** to save your audit as a Markdown document.
 
 ---
 

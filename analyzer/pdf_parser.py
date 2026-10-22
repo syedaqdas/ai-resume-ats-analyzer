@@ -23,6 +23,12 @@ class PDFParseResult:
     error_message: Optional[str] = None
 
 
+# Maximum allowable PDF size in bytes (15 MB)
+MAX_FILE_BYTES = 15 * 1024 * 1024
+# Maximum pages to extract for a resume document
+MAX_RESUME_PAGES = 50
+
+
 def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) -> PDFParseResult:
     """
     Extracts text and metadata from a PDF file using pdfplumber with pypdf fallback.
@@ -44,6 +50,11 @@ def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) 
                 is_valid=False
             )
         try:
+            if path.stat().st_size > MAX_FILE_BYTES:
+                return PDFParseResult(
+                    error_message=f"File size exceeds maximum limit of {MAX_FILE_BYTES // (1024 * 1024)}MB.",
+                    is_valid=False
+                )
             with open(path, "rb") as f:
                 stream = io.BytesIO(f.read())
         except Exception as e:
@@ -52,6 +63,11 @@ def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) 
                 is_valid=False
             )
     elif isinstance(pdf_source, bytes):
+        if len(pdf_source) > MAX_FILE_BYTES:
+            return PDFParseResult(
+                error_message=f"File size exceeds maximum limit of {MAX_FILE_BYTES // (1024 * 1024)}MB.",
+                is_valid=False
+            )
         stream = io.BytesIO(pdf_source)
     elif hasattr(pdf_source, "read"):
         # Handle Streamlit UploadedFile or io.BytesIO
@@ -59,6 +75,11 @@ def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) 
             content = pdf_source.read()
             if hasattr(pdf_source, "seek"):
                 pdf_source.seek(0)
+            if len(content) > MAX_FILE_BYTES:
+                return PDFParseResult(
+                    error_message=f"File size exceeds maximum limit of {MAX_FILE_BYTES // (1024 * 1024)}MB.",
+                    is_valid=False
+                )
             stream = io.BytesIO(content)
         except Exception as e:
             return PDFParseResult(
@@ -93,7 +114,9 @@ def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) 
             if pdf.metadata:
                 metadata = {str(k): str(v) for k, v in pdf.metadata.items()}
             page_texts = []
-            for page in pdf.pages:
+            for page_idx, page in enumerate(pdf.pages):
+                if page_idx >= MAX_RESUME_PAGES:
+                    break
                 t = page.extract_text()
                 if t:
                     page_texts.append(t)
@@ -108,7 +131,9 @@ def extract_text_from_pdf(pdf_source: Union[str, Path, io.BytesIO, bytes, Any]) 
             if reader.metadata:
                 metadata = {str(k): str(v) for k, v in reader.metadata.items()}
             page_texts = []
-            for p in reader.pages:
+            for page_idx, p in enumerate(reader.pages):
+                if page_idx >= MAX_RESUME_PAGES:
+                    break
                 t = p.extract_text()
                 if t:
                     page_texts.append(t)
