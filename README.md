@@ -330,6 +330,7 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
 ## 👨‍💻 Author & Acknowledgements
 
-Developed by a **Senior AI/ML Python Engineer & Open-Source Software Developer**.
-
+Developed by Syed Aqdas Imam, a Computer Science Engineering student at Cambridge Institute of Technology, Bengaluru.
+GitHub: @syedaqdas
+LinkedIn: linkedin.com/in/syedaqdas
 If you found this project helpful, please consider giving it a ⭐ on GitHub!
